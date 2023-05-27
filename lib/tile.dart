@@ -4,27 +4,70 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class Tile extends StatelessWidget {
-  final Color? color;
   final Widget? child;
   final int index;
-  const Tile({super.key, this.color, this.child, required this.index});
+  final Function(Brick) func;
+  final Brick brick;
+
+  const Tile({
+    super.key,
+    this.child,
+    required this.brick,
+    required this.func,
+    required this.index,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () {
+        func(brick);
+      },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Container(
-          color: color,
+          color: brick.getColor(),
           margin: const EdgeInsets.all(2),
           child: Center(
-              child: Text(
-            "$index",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white),
-          )),
+            child: brick.getNumText(),
+          ),
         ),
       ),
     );
+  }
+}
+
+class Brick {
+  late bool hidden;
+  late bool bomb;
+  late int adjec;
+  final int index;
+
+  Brick({required this.index}) {
+    hidden = true;
+    bomb = false;
+    adjec = 0;
+  }
+
+  Color getColor() {
+    if (hidden) {
+      return Colors.green;
+    } else if (bomb) {
+      return Colors.black;
+    } else {
+      return Colors.brown;
+    }
+  }
+
+  Text getNumText() {
+    if (!hidden & !bomb) {
+      return Text(
+        "$adjec",
+        textAlign: TextAlign.center,
+        style: const TextStyle(color: Colors.white),
+      );
+    } else {
+      return const Text("");
+    }
   }
 }

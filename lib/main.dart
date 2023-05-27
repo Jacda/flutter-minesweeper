@@ -12,7 +12,7 @@ class Minesweeper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    return MaterialApp(
+    return const MaterialApp(
       home: Board(),
       debugShowCheckedModeBanner: false,
     );
