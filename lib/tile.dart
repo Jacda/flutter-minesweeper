@@ -51,7 +51,8 @@ class Brick {
 
   Color getColor() {
     if (hidden) {
-      return Colors.green;
+      if (index % 2 == 0) return Colors.green[700]!;
+      return Colors.green[500]!;
     } else if (bomb) {
       return Colors.black;
     } else {

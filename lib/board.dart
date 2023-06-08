@@ -14,8 +14,8 @@ class Board extends StatefulWidget {
 
 class _BoardState extends State<Board> {
   bool isActive = false;
-  int rowLenth = 8;
-  int colLenth = 16;
+  int rowLenth = 9;
+  int colLenth = 40;
   List<Brick> bricks = [];
 
   @override
@@ -90,11 +90,11 @@ class _BoardState extends State<Board> {
   }
 
   bool isExternal(int center, int index) {
-    if (index > 127 || index < 0) {
+    if (index > rowLenth * colLenth - 1 || index < 0) {
       return true;
-    } else if (center % 8 == 0 && (index + 1) % 8 == 0) {
+    } else if (center % rowLenth == 0 && (index + 1) % rowLenth == 0) {
       return true;
-    } else if (index % 8 == 0 && (center + 1) % 8 == 0) {
+    } else if (index % rowLenth == 0 && (center + 1) % rowLenth == 0) {
       return true;
     }
     return false;
@@ -102,25 +102,18 @@ class _BoardState extends State<Board> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.greenAccent,
-      body: Container(
-        alignment: Alignment.center,
-        margin: const EdgeInsets.fromLTRB(10, 100, 10, 0),
-        child: GridView.builder(
-          itemCount: rowLenth * colLenth,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: rowLenth,
-          ),
-          itemBuilder: (context, index) {
-            return Tile(
-              index: index,
-              brick: bricks[index],
-              func: openBrick,
-            );
-          },
-        ),
+    return GridView.builder(
+      itemCount: rowLenth * colLenth,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: rowLenth,
       ),
+      itemBuilder: (context, index) {
+        return Tile(
+          index: index,
+          brick: bricks[index],
+          func: openBrick,
+        );
+      },
     );
   }
 }
