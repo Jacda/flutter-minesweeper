@@ -3,11 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:minesweeper/board.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.dark,
-  ));
-
   runApp(const Minesweeper());
 }
 
@@ -16,8 +11,8 @@ class Minesweeper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky,
+        overlays: []);
     return const MaterialApp(
       title: "HELLO",
       home: Board(),
